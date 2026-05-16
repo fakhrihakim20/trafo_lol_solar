@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+dist/
+build/
+.venv/
+.codex-tmp/
+
+# Raw/heavy data — regenerable from scripts 02 & 04
+data/raw/
+data/processed/*.parquet
+data/processed/*.csv
+!data/processed/.gitkeep
+
+# Heavy Monte-Carlo artifacts — driving CSVs are committed in results/tables/
+results/monte_carlo_results.parquet
+results/tables/mc_results_all_scenarios.parquet
+results/tables/mc_results_all_scenarios.csv
+results/tables/mc_results_phase3_baseline.parquet
+results/tables/mc_results_phase3_jakarta.parquet
+results/tables/dispatch_comparison.parquet
+results/logs/
+
+# Legacy artifact names (older runs)
+results/surrogate_xgb.json
+results/surrogate_model_phase3_jakarta.json
+results/surrogate_scaler_phase3_jakarta.pkl
+
+# LaTeX byproducts (PDF is committed)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Web (Next.js) — see website/.gitignore for in-tree rules
+website/node_modules/
+website/.next/
+website/out/
+website/public/data/*.json
+!website/public/data/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/

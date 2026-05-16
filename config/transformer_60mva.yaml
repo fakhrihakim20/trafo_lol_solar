@@ -1,0 +1,46 @@
+# Transformer nameplate and thermal parameters
+# Source: IEEE C57.91-2011 Annex G (typical ONAF values) + PLN GI-150kV nameplate
+transformer:
+  name: "GI-150kV-Demo"
+  rated_mva: 60.0
+  hv_kv: 150.0
+  lv_kv: 20.0
+  cooling_mode: "ONAF"
+
+  # Thermal parameters — IEEE C57.91-2011 Table 4 (ONAF cooling mode)
+  delta_theta_to_r: 55.0    # °C, rated top-oil rise over ambient (ΔΘ_TO_R)
+  delta_theta_hs_r: 25.0    # °C, rated hot-spot rise over top-oil (ΔΘ_HS_R)
+  tau_to_min: 150.0         # minutes, oil thermal time constant (τ_TO)
+  tau_w_min: 7.0            # minutes, winding thermal time constant (τ_W)
+  R: 5.0                    # load-loss / no-load-loss ratio at rated load
+  n: 0.8                    # top-oil temperature exponent (ONAF, C57.91 Table 4)
+  m: 0.8                    # winding temperature exponent (ONAF, C57.91 Table 4)
+
+  # Insulation — IEEE C57.91-2011 Clause 5 (thermally upgraded Kraft paper)
+  insulation_type: "thermally_upgraded_kraft"
+  rated_life_hours: 180000          # hours at continuous 110 °C hot-spot
+  B_constant: 15000                 # Arrhenius constant [K] (C57.91-2011 Eq. 3)
+  theta_hs_rated: 110.0             # °C, reference hot-spot temperature (F_AA = 1.0)
+  insulation_water_content_pct: 1.0 # % by dry weight; 1% = dry-service (Annex E)
+
+  # Reverse-flow correction sensitivity.  Headline paper runs keep this at 0.0
+  # because measured directional reverse-current loss data are unavailable.
+  # A value such as 0.025 represents a +2.5% equivalent loss term during export.
+  reverse_flow_loss_uplift: 0.0
+
+  # Multi-mode cooling controller (ONAN / ONAF two-state state machine)
+  # Controller switches to ONAF when theta_TO exceeds theta_to_on_c;
+  # reverts to ONAN when theta_TO drops below theta_to_off_c (hysteresis).
+  cooling_states:
+    ONAN:
+      tau_to_min: 240.0        # min — natural convection (C57.91 Table 4)
+      delta_theta_to_r: 55.0   # °C — same rated rise as ONAF
+      n: 0.8
+    ONAF:
+      tau_to_min: 150.0        # min — forced air, faster thermal response
+      delta_theta_to_r: 55.0   # °C
+      n: 0.8
+    controller:
+      theta_to_on_c: 70.0      # °C — switch ONAN→ONAF when θ_TO exceeds this
+      theta_to_off_c: 60.0     # °C — switch ONAF→ONAN when θ_TO drops below this
+      fan_mttf_hours: 8760.0   # mean time to fan failure [hours]; 8760 = ~1 failure/yr

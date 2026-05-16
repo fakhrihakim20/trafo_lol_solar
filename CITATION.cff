@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the associated paper."
+type: software
+title: "Transformer Loss-of-Life Simulation under Rooftop-PV Penetration"
+abstract: >
+  Reproducible Python simulation codebase for the IEEE ICT-PEP 2026 paper
+  on transformer loss-of-life acceleration under high rooftop-PV penetration
+  in Indonesian tropical substations. Implements the IEEE C57.91-2011
+  differential thermal model and an XGBoost autoregressive surrogate for
+  fast Monte Carlo analysis.
+version: "1.0.0"
+date-released: "2026-06-30"
+license: MIT
+repository-code: "https://github.com/placeholder/transformer-lol-sim"
+authors:
+  - family-names: "Hakim"
+    given-names: "Fakhri"
+    email: "fakhrihakim20@gmail.com"
+    affiliation: "PT PLN Persero"
+keywords:
+  - transformer
+  - loss-of-life
+  - photovoltaic
+  - XGBoost
+  - IEEE C57.91
+  - Monte Carlo
+  - tropical power systems
+  - Indonesia
+references:
+  - type: conference-paper
+    title: >
+      Transformer Loss-of-Life Acceleration under High Rooftop-PV Penetration
+      on Indonesian 150/20 kV Substations: A Hybrid IEEE C57.91 + XGBoost
+      Simulation
+    conference:
+      name: "IEEE International Conference on ICT for Smart Society (ICT-PEP 2026)"
+    year: 2026
+    authors:
+      - family-names: "Hakim"
+        given-names: "Fakhri"
+        affiliation: "PT PLN Persero"

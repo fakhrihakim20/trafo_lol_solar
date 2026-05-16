@@ -1,0 +1,17 @@
+# Output and data paths (relative to transformer_lol_sim/ project root)
+data:
+  raw: "data/raw"
+  processed: "data/processed"
+  synthetic: "data/synthetic"
+  surrogate_training: "data/processed/surrogate_training_data.parquet"
+  demo_load_csv: "data/synthetic/demo_pln_load.csv"
+
+results:
+  figures: "results/figures"
+  tables: "results/tables"
+  metrics: "results/metrics.json"
+  logs: "results/logs"
+  mc_results: "results/tables/mc_results_all_scenarios.parquet"
+  mc_results_csv: "results/tables/mc_results_all_scenarios.csv"
+  surrogate_model: "results/surrogate_model.json"
+  surrogate_scaler: "results/surrogate_scaler.pkl"

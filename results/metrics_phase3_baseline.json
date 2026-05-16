@@ -1,0 +1,19 @@
+{
+  "surrogate_rmse_c": 0.2543,
+  "surrogate_r2": 0.999674,
+  "surrogate_lol_abs_err_pct": 0.000564,
+  "surrogate_best_iteration": 799,
+  "n_mc_runs_per_scenario": 1000,
+  "n_scenarios": 41,
+  "total_runs": 41000,
+  "runtime_seconds": 2759.9,
+  "today_baseline_lol_pct_mean": 0.0586,
+  "today_baseline_lol_pct_std": 0.0002,
+  "pv50_today_lol_pct_mean": 0.0396,
+  "pv_lol_reduction_at_50pct_today": 32.4,
+  "break_even_pv_pct_at_1c_4pct_growth": 50,
+  "baseline_lol_pct_mean": 0.0887,
+  "baseline_lol_pct_std": 0.0157,
+  "high_pv_lol_pct_mean": 0.0589,
+  "turnover_pv_penetration_pct": 75.0
+}

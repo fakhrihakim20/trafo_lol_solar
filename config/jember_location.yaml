@@ -1,0 +1,30 @@
+# Jember location reference (Phase 4C — PyPSA migration)
+# Geographic and climate parameters for the Jember case study.
+# Coordinates: BMKG Jember station (Stasiun Klimatologi Jember, Sukowono).
+
+location:
+  name: "Jember"
+  region: "East Java"
+  country: "Indonesia"
+  latitude: -8.17        # degrees south
+  longitude: 113.70      # degrees east
+  elevation_m: 89        # Jember city centre
+  timezone: "Asia/Jakarta"
+  bmkg_station_id: "96935"   # Jember station per BMKG online portal
+  pln_substation_name: "Jember"
+  utility_load_centre: "PLN UP3 Jember (Distribusi Jawa Timur)"
+
+# Reference climate (calibrated from BMKG Jember 2014–2024 monthly normals)
+# Used as defaults for ambient_profile.synthesize_tropical_ambient when no
+# BMKG CSV is loaded.  Jember is cooler and slightly wetter than Jakarta —
+# higher elevation and inland position widen the diurnal swing.
+climate:
+  annual_mean_c: 26.5         # K, mean annual ambient (Jakarta = 28.0)
+  daily_amplitude_c: 5.0      # peak-to-trough diurnal swing (Jakarta = 4.5)
+  seasonal_amplitude_c: 1.2   # annual peak-to-trough (Jakarta = 1.5; smaller because closer to coast)
+  noise_std_c: 0.8
+
+# Reference solar resource (calibrated from NSRDB Java 1° cell ≈ Jember)
+solar:
+  annual_capacity_factor: 0.18   # benchmark for atlite validation
+  haurwitz_kt_mean: 0.55         # clear-sky kT mean for the Markov chain
