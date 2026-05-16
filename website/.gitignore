@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+*.log
+.DS_Store
+public/data/
+!public/data/.gitkeep
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+next-env.d.ts

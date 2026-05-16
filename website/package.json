@@ -1,0 +1,36 @@
+{
+  "name": "transformer-lol-report",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stakeholder companion site for the IEEE ICT-PEP 2026 paper on transformer loss-of-life under rooftop PV.",
+  "scripts": {
+    "predev": "node scripts/build_data.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/build_data.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "data": "node scripts/build_data.mjs"
+  },
+  "dependencies": {
+    "geist": "^1.7.0",
+    "katex": "^0.16.11",
+    "next": "^14.2.34",
+    "plotly.js-dist-min": "^2.35.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-plotly.js": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.5",
+    "@types/plotly.js": "^3.0.10",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-plotly.js": "^2.6.3",
+    "autoprefixer": "^10.4.20",
+    "csv-parse": "^5.5.6",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.2"
+  }
+}
