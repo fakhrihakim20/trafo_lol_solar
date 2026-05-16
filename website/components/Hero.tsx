@@ -1,77 +1,105 @@
 import { HEADLINE, SUBSTATION } from '@/content/findings';
+import Byline from './Byline';
+
+// Full-bleed magazine-cover hero. Byline → display headline (full width,
+// two-tone) → dek (drop-cap, justified, narrow measure) → colophon row
+// (four tabular stats, hairline rules) → link-style CTAs.
 
 export default function Hero() {
   return (
     <section
       id="top"
-      className="relative pt-28 pb-24 md:pt-36 md:pb-32 px-6 min-h-[100dvh] flex flex-col justify-between"
+      className="relative min-h-[100dvh] flex flex-col"
     >
-      <div className="max-w-page mx-auto w-full grid md:grid-cols-12 gap-10 md:gap-14">
-        <div className="md:col-span-7">
-          <p className="kicker mb-6">
-            IEEE ICT-PEP 2026 · Companion report
-          </p>
-          <h1 className="display text-5xl md:text-7xl lg:text-[5.5rem] text-ink-950 dark:text-ink-50">
-            Rooftop solar buys our transformers years of life
-            <span className="italic font-light"> — </span>
-            <span className="text-ink-500">until the climate eats the gain.</span>
+      <Byline />
+
+      <div className="flex-1 flex flex-col justify-center px-6 py-16 md:py-24">
+        <div className="max-w-page mx-auto w-full">
+          <p className="kicker mb-8">IEEE ICT-PEP 2026 · Companion report</p>
+
+          <h1 className="display text-[3.5rem] md:text-[6.5rem] lg:text-[8.5rem] xl:text-[9.5rem] text-ink-950 dark:text-ink-50">
+            Rooftop solar buys our&nbsp;transformers years of life
+            <span className="block italic font-light text-ink-500 dark:text-ink-400">
+              — until the climate eats the&nbsp;gain.
+            </span>
           </h1>
-          <p className="prose-body mt-10 text-ink-700 dark:text-ink-200">
-            We ran <span className="numera">{HEADLINE.mcRuns.toLocaleString('en-US')}</span> Monte-Carlo simulations of
-            the {SUBSTATION.ratingMVA} MVA distribution transformer at {SUBSTATION.name} —
-            a {SUBSTATION.hvKv}/{SUBSTATION.mvKv} kV substation in {SUBSTATION.province} — under combinations of
-            rooftop-PV penetration, ambient warming, load growth, EV charging, and battery storage.
-            The physics is IEEE C57.91-2011. The acceleration is XGBoost. The findings are sobering.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
+
+          <div className="mt-16 md:mt-20 grid md:grid-cols-12 gap-10">
+            <div className="md:col-span-7 md:col-start-1 drop-cap">
+              <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink-800 dark:text-ink-100 max-w-[44ch]">
+                We ran{' '}
+                <span className="numera">
+                  {HEADLINE.mcRuns.toLocaleString('en-US')}
+                </span>{' '}
+                Monte-Carlo simulations of the {SUBSTATION.ratingMVA}&nbsp;MVA
+                distribution transformer at {SUBSTATION.name} — a&nbsp;
+                {SUBSTATION.hvKv}/{SUBSTATION.mvKv}&nbsp;kV substation in{' '}
+                {SUBSTATION.province} — under combinations of rooftop-PV
+                penetration, ambient warming, load growth, EV charging, and
+                battery storage. The physics is IEEE&nbsp;C57.91-2011. The
+                acceleration is XGBoost. The findings are sobering.
+              </p>
+            </div>
+
+            <aside className="md:col-span-4 md:col-start-9 self-end text-sm">
+              <dl className="space-y-2 text-ink-600 dark:text-ink-300">
+                <Row k="Substation" v={`${SUBSTATION.name} · 150/20 kV`} />
+                <Row k="Transformer" v={`${SUBSTATION.ratingMVA} MVA · ${SUBSTATION.cooling}`} />
+                <Row k="Climate" v={`${SUBSTATION.meanAmbientC.toFixed(1)} °C mean ambient`} />
+                <Row k="Operator" v={SUBSTATION.operator} />
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <footer className="px-6 pb-16 md:pb-20">
+        <div className="max-w-page mx-auto">
+          <div className="colophon-row">
+            <Figure value={`−${HEADLINE.pvCoolingPct}%`} label="LoL at 75 % PV vs no-PV baseline today" />
+            <Figure value={`+${HEADLINE.climateUpliftPct}%`} label="From +1 °C ambient and 4.5 %/yr growth" />
+            <Figure value={`${HEADLINE.speedupX}×`} label="Surrogate speedup vs IEEE ODE" />
+            <Figure value={`${HEADLINE.wallClockMin} min`} label={`${HEADLINE.mcRuns.toLocaleString('en-US')}-run Monte Carlo wall-clock`} />
+          </div>
+
+          <p className="mt-10 text-sm text-ink-600 dark:text-ink-300 max-w-[60ch]">
             <a
               href="#findings"
-              className="inline-flex items-center gap-2 text-sm font-medium bg-ink-950 text-ink-50 dark:bg-ink-50 dark:text-ink-950 rounded-md px-4 py-2.5 transition-transform active:scale-[0.98]"
+              className="underline underline-offset-4 decoration-1 text-ink-900 dark:text-ink-50 hover:text-signal-500 dark:hover:text-signal-300 mr-6"
             >
-              Read the five findings
+              Read the five findings ↓
             </a>
             <a
               href="/scenarios/"
-              className="inline-flex items-center gap-2 text-sm font-medium border hairline text-ink-900 dark:text-ink-100 rounded-md px-4 py-2.5 hover:bg-ink-100 dark:hover:bg-ink-900 transition-colors"
+              className="underline underline-offset-4 decoration-1 hover:text-signal-500 dark:hover:text-signal-300"
             >
-              Explore the 41-scenario dataset
+              Explore the 41-scenario dataset ↗
             </a>
-          </div>
-        </div>
-
-        <aside className="md:col-span-5 self-end">
-          <div className="border-t hairline pt-8 md:pt-12 grid grid-cols-2 gap-x-8 gap-y-10">
-            <Stat value={`−${HEADLINE.pvCoolingPct}%`} label="Annual loss-of-life at 75 % PV vs no-PV baseline (today)" tone="cool" />
-            <Stat value={`+${HEADLINE.climateUpliftPct}%`} label="Loss-of-life uplift from +1 °C ambient + 4.5 %/yr load growth" tone="warm" />
-            <Stat value={`${HEADLINE.speedupX}×`} label="Wall-clock speedup of the XGBoost surrogate vs the IEEE ODE" />
-            <Stat value={`${HEADLINE.wallClockMin} min`} label={`Full ${HEADLINE.mcRuns.toLocaleString('en-US')}-run Monte Carlo on a laptop`} />
-          </div>
-        </aside>
-      </div>
-
-      <div className="max-w-page mx-auto w-full mt-20 md:mt-28">
-        <div className="flex items-end justify-between border-t hairline pt-6">
-          <p className="text-xs kicker">Scroll for the full report</p>
-          <p className="text-xs numera text-ink-500">
-            {SUBSTATION.meanAmbientC.toFixed(1)} °C mean ambient · {SUBSTATION.cooling} cooling
           </p>
         </div>
-      </div>
+      </footer>
     </section>
   );
 }
 
-function Stat({ value, label, tone }: { value: string; label: string; tone?: 'cool' | 'warm' }) {
-  const accent =
-    tone === 'cool'
-      ? 'text-signal-500 dark:text-signal-300'
-      : tone === 'warm'
-        ? 'text-warmInk dark:text-warm'
-        : 'text-ink-950 dark:text-ink-50';
+function Figure({ value, label }: { value: string; label: string }) {
   return (
     <div>
-      <p className={`numera text-3xl md:text-4xl font-medium tracking-tight ${accent}`}>{value}</p>
-      <p className="mt-2 text-sm text-ink-600 dark:text-ink-300 leading-snug">{label}</p>
+      <p className="numera text-3xl md:text-5xl font-medium tracking-tight text-ink-950 dark:text-ink-50">
+        {value}
+      </p>
+      <p className="mt-3 text-xs leading-snug uppercase tracking-wider text-ink-600 dark:text-ink-400 max-w-[22ch]">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex justify-between gap-6 border-b hairline pb-2">
+      <dt className="text-ink-500 dark:text-ink-400">{k}</dt>
+      <dd className="numera text-ink-900 dark:text-ink-100 text-right">{v}</dd>
     </div>
   );
 }

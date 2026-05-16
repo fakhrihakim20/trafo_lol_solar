@@ -48,8 +48,13 @@ const config: Config = {
       },
       maxWidth: {
         prose: '68ch',
+        measure: '68ch',
         chart: '1080px',
         page: '1280px',
+      },
+      fontSize: {
+        'display-xl': ['8rem', { lineHeight: '0.92', letterSpacing: '-0.04em' }],
+        'display-2xl': ['10rem', { lineHeight: '0.9', letterSpacing: '-0.045em' }],
       },
       letterSpacing: {
         tightest: '-0.04em',

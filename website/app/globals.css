@@ -42,12 +42,119 @@ body::before {
 
 /* Editorial typographic refinements */
 .prose-body {
-  max-width: 65ch;
+  max-width: 68ch;
   font-size: 1.0625rem;
   line-height: 1.7;
   letter-spacing: -0.005em;
 }
 .prose-body p + p { margin-top: 1.1em; }
+
+/* Drop cap on the first paragraph inside a .drop-cap container.
+   Magazine convention: first letter of the opening graf sized at ~3 lines
+   of body text, hanging into the prose. */
+.drop-cap > p:first-of-type::first-letter,
+.drop-cap p.lede::first-letter {
+  font-family: var(--font-newsreader), Georgia, serif;
+  float: left;
+  font-size: 5rem;
+  line-height: 0.86;
+  margin: 0.32rem 0.6rem 0 -0.05rem;
+  font-weight: 400;
+  color: #111111;
+}
+@media (prefers-color-scheme: dark) {
+  .drop-cap > p:first-of-type::first-letter,
+  .drop-cap p.lede::first-letter { color: #F7F6F3; }
+}
+
+/* Byline — masthead row at the top of the piece */
+.byline {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #56544F;
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA;
+  padding: 0.75rem 0;
+}
+@media (prefers-color-scheme: dark) {
+  .byline {
+    color: #B3B1AC;
+    border-color: rgba(255,255,255,0.08);
+  }
+}
+
+/* Colophon stat row — four tabular figures + labels, hairline rules,
+   replaces the SaaS-y KPI tile grid in the hero. */
+.colophon-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA;
+  padding: 1.75rem 0;
+}
+@media (min-width: 768px) {
+  .colophon-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3rem; }
+}
+@media (prefers-color-scheme: dark) {
+  .colophon-row { border-color: rgba(255,255,255,0.08); }
+}
+
+/* Pull quote — italic serif, left hairline rule, generous vertical room. */
+.pull-quote {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.6rem, 2.5vw + 0.9rem, 2.6rem);
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  color: #1A1A1A;
+  border-left: 1px solid #EAEAEA;
+  padding: 0.25rem 0 0.25rem 1.75rem;
+  margin: 3.5rem 0;
+  max-width: 38ch;
+}
+@media (prefers-color-scheme: dark) {
+  .pull-quote {
+    color: #F7F6F3;
+    border-color: rgba(255,255,255,0.16);
+  }
+}
+
+/* Reading progress — thin fixed top bar driven by JS rAF.
+   The rail is invisible; the fill is PLN blue. */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  z-index: 50;
+  pointer-events: none;
+}
+.reading-progress > span {
+  display: block;
+  height: 100%;
+  background: #1B3F8B;
+  width: var(--progress, 0%);
+  transition: width 60ms linear;
+}
+@media (prefers-color-scheme: dark) {
+  .reading-progress > span { background: #9AAFD4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress > span { transition: none; }
+}
+
+/* Roman numeral helper — old-style figures + small-caps where available. */
+.roman {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.04em;
+}
 .prose-body a {
   color: #1B3F8B;
   text-decoration: underline;

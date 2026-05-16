@@ -44,10 +44,18 @@ export function useIsDark() {
 }
 
 export function chartBase(dark: boolean): Partial<Layout> {
+  // Axis titles in italic Newsreader serif give the charts a magazine
+  // "plate caption" register that matches the editorial body type.
+  const serifTitleFont = {
+    family: 'var(--font-newsreader), Georgia, serif',
+    size: 14,
+    color: dark ? '#D5D4D0' : '#37352F',
+  } as const;
+
   return {
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
-    margin: { l: 56, r: 24, t: 12, b: 48 },
+    margin: { l: 64, r: 24, t: 24, b: 56 },
     font: {
       family:
         'var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
@@ -64,27 +72,32 @@ export function chartBase(dark: boolean): Partial<Layout> {
       },
       align: 'left',
     },
-    xaxis: {
+    xaxis: ({
       gridcolor: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
       zerolinecolor: dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
       tickfont: { family: 'var(--font-jetbrains), monospace', size: 11 },
+      // `title` font is applied here for the per-chart x-axis title text.
+      // Plotly merges this with the chart-level `xaxis.title` set in each
+      // chart component. Italic Newsreader gives the "plate caption" feel.
+      title: { font: { ...serifTitleFont, style: 'italic' } },
       linecolor: dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.2)',
       linewidth: 1,
       mirror: false,
       ticks: 'outside',
       ticklen: 4,
       tickcolor: dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.2)',
-    },
-    yaxis: {
+    } as any),
+    yaxis: ({
       gridcolor: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
       zerolinecolor: dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
       tickfont: { family: 'var(--font-jetbrains), monospace', size: 11 },
+      title: { font: { ...serifTitleFont, style: 'italic' } },
       linecolor: dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.2)',
       linewidth: 1,
       ticks: 'outside',
       ticklen: 4,
       tickcolor: dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.2)',
-    },
+    } as any),
     legend: {
       orientation: 'h',
       yanchor: 'bottom',

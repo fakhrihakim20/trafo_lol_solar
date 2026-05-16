@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans';
 import { JetBrains_Mono, Newsreader } from 'next/font/google';
 import './globals.css';
 import SectionNav from '@/components/SectionNav';
+import ReadingProgress from '@/components/ReadingProgress';
 
 const geist = GeistSans;
 const news = Newsreader({
@@ -35,31 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <ReadingProgress />
         <SectionNav />
         <main id="main" className="relative z-[2]">
           {children}
         </main>
-        <footer className="relative z-[2] border-t hairline mt-32 py-12 px-6">
-          <div className="max-w-page mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6 text-sm text-ink-600 dark:text-ink-300">
-            <div>
-              <p className="font-serif italic text-ink-700 dark:text-ink-200 text-base">
-                Transformer Loss-of-Life under Rooftop-PV Penetration.
-              </p>
-              <p className="mt-1">Companion report to the IEEE ICT-PEP 2026 manuscript.</p>
-            </div>
-            <div className="md:text-right">
-              <p>Fakhri Hakim · PT PLN (Persero) · 2026</p>
-              <p className="mt-1">
-                <a
-                  className="underline underline-offset-4 hover:text-ink-900 dark:hover:text-ink-50"
-                  href="https://github.com"
-                >
-                  Source &amp; reproducibility
-                </a>
-              </p>
-            </div>
-          </div>
-        </footer>
       </body>
     </html>
   );

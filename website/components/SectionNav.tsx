@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 
 const SECTIONS = [
-  { id: 'problem', label: 'Why it matters' },
-  { id: 'methodology', label: 'How we measured' },
-  { id: 'findings', label: 'Findings' },
-  { id: 'scenarios', label: 'Explore' },
-  { id: 'implications', label: 'Implications' },
-  { id: 'reproducibility', label: 'Reproduce' },
+  { id: 'problem', numeral: 'I', label: 'Why' },
+  { id: 'methodology', numeral: 'II', label: 'Methods' },
+  { id: 'findings', numeral: 'III', label: 'Findings' },
+  { id: 'scenarios', numeral: 'IV', label: 'Explore' },
+  { id: 'implications', numeral: 'V', label: 'Implications' },
+  { id: 'reproducibility', numeral: 'VI', label: 'Reproduce' },
 ];
 
 export default function SectionNav() {
@@ -16,7 +16,7 @@ export default function SectionNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -40,41 +40,59 @@ export default function SectionNav() {
 
   return (
     <nav
-      aria-label="Section navigation"
+      aria-label="Table of contents"
       className={
-        'sticky top-0 z-30 w-full border-b transition-colors duration-200 ' +
+        'sticky top-0 z-30 w-full transition-colors duration-200 ' +
         (scrolled
-          ? 'bg-ink-50/80 dark:bg-ink-950/80 backdrop-blur-md hairline'
-          : 'bg-transparent border-transparent')
+          ? 'bg-ink-50/85 dark:bg-ink-950/85 backdrop-blur-md border-b hairline'
+          : 'bg-transparent border-b border-transparent')
       }
     >
       <div className="max-w-page mx-auto px-6 py-3 flex items-center justify-between gap-6">
-        <a href="#top" className="text-sm tracking-tight font-medium text-ink-950 dark:text-ink-50">
-          GI Jember · Transformer LoL Report
+        <a
+          href="#top"
+          className="font-serif italic text-sm md:text-base text-ink-900 dark:text-ink-100 tracking-tight"
+        >
+          Transformer Loss-of-Life
+          <span className="hidden md:inline text-ink-500"> · IEEE ICT-PEP 2026</span>
         </a>
-        <ul className="hidden md:flex items-center gap-1 text-sm">
+
+        <ol className="hidden md:flex items-center gap-x-7 text-sm" role="list">
           {SECTIONS.map((s) => (
             <li key={s.id}>
               <a
                 href={`#${s.id}`}
                 className={
-                  'px-3.5 py-2 rounded-md transition-colors ' +
+                  'group inline-flex items-baseline gap-1.5 py-2 transition-colors ' +
                   (active === s.id
-                    ? 'text-ink-950 dark:text-ink-50 bg-ink-200/60 dark:bg-ink-800/60'
+                    ? 'text-ink-950 dark:text-ink-50'
                     : 'text-ink-500 hover:text-ink-900 dark:hover:text-ink-100')
                 }
               >
-                {s.label}
+                <span className="numera text-[0.7rem] uppercase tracking-widest text-ink-400 group-hover:text-ink-700 dark:group-hover:text-ink-200">
+                  {s.numeral}
+                </span>
+                <span
+                  className={
+                    'border-b transition-colors ' +
+                    (active === s.id
+                      ? 'border-ink-950 dark:border-ink-50'
+                      : 'border-transparent')
+                  }
+                >
+                  {s.label}
+                </span>
               </a>
             </li>
           ))}
-        </ul>
+        </ol>
+
         <a
           href="/scenarios/"
-          className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-ink-950 dark:text-ink-50 border hairline rounded-md px-3.5 py-2 hover:bg-ink-100 dark:hover:bg-ink-900 transition-colors"
+          className="hidden lg:inline-flex items-baseline gap-1 text-sm text-ink-600 dark:text-ink-300 hover:text-ink-950 dark:hover:text-ink-50 transition-colors"
         >
-          Open data explorer
-          <span aria-hidden className="numera text-xs text-ink-500">→</span>
+          Data explorer
+          <span aria-hidden className="numera text-xs">↗</span>
         </a>
       </div>
     </nav>

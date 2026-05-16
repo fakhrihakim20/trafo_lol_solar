@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero';
 import Equation from '@/components/Equation';
 import StatCallouts from '@/components/StatCallout';
+import PullQuote from '@/components/PullQuote';
 import NetworkDiagram from '@/components/charts/NetworkDiagram';
 import SurrogateAccuracy from '@/components/charts/SurrogateAccuracy';
 import PvVsLolChart from '@/components/charts/PvVsLolChart';
@@ -19,18 +20,20 @@ const chartMap: Record<string, React.ComponentType> = {
   EvBatteryImpact,
 };
 
+const FINDING_NUMERALS = ['I', 'II', 'III', 'IV', 'V'];
+
 export default function Page() {
   return (
     <>
       <Hero />
 
-      {/* Why it matters */}
-      <Section id="problem" kicker="Why it matters">
+      {/* I. Why it matters */}
+      <Section id="problem" numeral="I" kicker="Why it matters">
         <SectionHeader>
           A 60 MVA transformer is a million-dollar mistake waiting for a hot afternoon.
         </SectionHeader>
         <div className="grid md:grid-cols-12 gap-10 md:gap-16">
-          <div className="md:col-span-7 prose-body text-ink-700 dark:text-ink-200">
+          <div className="md:col-span-7 prose-body text-ink-700 dark:text-ink-200 drop-cap">
             <p>
               PT PLN operates more than 5 000 distribution-class power transformers across the
               Java–Bali 150/20 kV network. Each one ages by Arrhenius kinetics: every 6 °C above
@@ -64,13 +67,13 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* Methodology */}
-      <Section id="methodology" kicker="Methodology">
+      {/* II. Methodology */}
+      <Section id="methodology" numeral="II" kicker="Methodology">
         <SectionHeader>
           IEEE C57.91 physics, accelerated by XGBoost, dispatched by PyPSA.
         </SectionHeader>
 
-        <div className="prose-body text-ink-700 dark:text-ink-200">
+        <div className="prose-body text-ink-700 dark:text-ink-200 drop-cap">
           <p>
             The substation is modelled as a two-bus PyPSA network. The high-voltage bus connects to
             a slack generator representing the Java–Bali 150 kV ring; the 60 MVA ONAF transformer
@@ -152,24 +155,25 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* Findings */}
-      <Section id="findings" kicker="Findings">
+      {/* III. Findings */}
+      <Section id="findings" numeral="III" kicker="Findings">
         <SectionHeader>Five things the 41 000 simulations told us.</SectionHeader>
 
-        <div className="space-y-32">
+        <div className="space-y-32 md:space-y-40">
           {FINDINGS.map((f, i) => {
             const Chart = chartMap[f.chart];
+            const num = FINDING_NUMERALS[i] || String(i + 1);
             return (
               <article
                 key={f.id}
                 id={f.id}
-                className="scroll-mt-24"
+                className="scroll-mt-28"
                 aria-labelledby={`f-${f.id}`}
               >
-                <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-10">
-                  <div className="md:col-span-1 md:pt-2">
-                    <p className="numera text-ink-400 dark:text-ink-500 text-sm">
-                      0{i + 1}
+                <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-12">
+                  <div className="md:col-span-1 md:pt-3">
+                    <p className="numera text-3xl md:text-4xl text-ink-300 dark:text-ink-700 leading-none">
+                      {num}.
                     </p>
                   </div>
                   <div className="md:col-span-11">
@@ -188,12 +192,14 @@ export default function Page() {
 
                 <StatCallouts items={f.callouts} />
 
-                <div className="prose-body text-ink-700 dark:text-ink-200 mb-10">
+                <div className="prose-body text-ink-700 dark:text-ink-200 mb-2">
                   <p>{f.body}</p>
                 </div>
 
+                {f.pullQuote ? <PullQuote>{f.pullQuote}</PullQuote> : null}
+
                 {Chart ? (
-                  <div className="max-w-chart">
+                  <div className="max-w-chart mt-10">
                     <Chart />
                   </div>
                 ) : null}
@@ -203,10 +209,10 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* Embedded explorer */}
-      <Section id="scenarios" kicker="Explore">
+      {/* IV. Embedded explorer */}
+      <Section id="scenarios" numeral="IV" kicker="Explore">
         <SectionHeader>Pick a future. See the loss.</SectionHeader>
-        <p className="prose-body text-ink-700 dark:text-ink-200 mb-10">
+        <p className="prose-body text-ink-700 dark:text-ink-200 mb-10 drop-cap">
           The Monte-Carlo grid covers PV penetration ∈ {`{0, 10, 30, 50, 75}`} %, ambient offsets ∈{' '}
           {`{0, +1, +2}`} °C, and load growth ∈ {`{0, +4.5}`} %/yr — thirty cells in total, plus
           eleven named scenarios for EV and battery storage. Use the controls below to read off the
@@ -218,35 +224,41 @@ export default function Page() {
             className="underline underline-offset-4 text-signal-500 dark:text-signal-300 hover:opacity-80"
             href="/scenarios/"
           >
-            Open the full data explorer →
+            Open the full data explorer ↗
           </a>
         </p>
       </Section>
 
-      {/* Implications */}
-      <Section id="implications" kicker="Implications">
+      {/* V. Implications */}
+      <Section id="implications" numeral="V" kicker="Implications">
         <SectionHeader>
           What PLN planners should take from this — and what is still open.
         </SectionHeader>
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+
+        <ol className="space-y-14 max-w-[68ch]">
           <Implication
+            n={1}
             title="Rooftop PV is a real aging benefit today."
             body="At GI Jember’s 26.5 °C ambient, every additional percentage point of rooftop-PV penetration cools the daytime hot-spot. The 75 % PV case buys nearly a fifth of the annual loss-of-life back — quantitatively reproducible across paired Monte-Carlo seeds."
           />
           <Implication
+            n={2}
             title="It will not be enough on its own."
             body="Under projected 2030 ambient warming and 4.5 %/yr load growth, even maximum rooftop-PV penetration cannot fully restore today’s baseline. Cooling-system upgrades, transformer up-rating, and explicit demand-side management must run alongside the rooftop deployment."
           />
           <Implication
+            n={3}
             title="EV charging must be coordinated, not just permitted."
             body="A 30 % EV fleet, charging on its uncoordinated default schedule, cancels most of the rooftop-PV gain and pushes the substation above the no-PV baseline. Time-of-use tariffs or directly controlled charging are not optional features of the transition — they are prerequisites."
           />
           <Implication
+            n={4}
             title="Economic dispatch is not aging-optimal."
             body="The HiGHS LP optimises slack-import cost; the threshold rule, almost by accident, targets the hours where Arrhenius aging is super-linear. Operators relying on cost-driven optimisation should not assume it protects insulation life — until aging constraints enter the LP objective, dispatch heuristics with explicit thermal awareness perform better."
           />
-        </div>
-        <p className="prose-body mt-16 text-ink-700 dark:text-ink-200">
+        </ol>
+
+        <p className="prose-body mt-20 text-ink-700 dark:text-ink-200">
           The framework is portable. Re-targeting it to any 150/20 kV PLN substation requires only
           a new location configuration — site-specific ambient parameters, load profile, and PV
           coordinates. No code changes. Fleet-level loss-of-life risk mapping is therefore feasible
@@ -254,11 +266,11 @@ export default function Page() {
         </p>
       </Section>
 
-      {/* Reproducibility */}
-      <Section id="reproducibility" kicker="Reproduce">
+      {/* VI. Reproducibility */}
+      <Section id="reproducibility" numeral="VI" kicker="Reproduce">
         <SectionHeader>Run the entire pipeline on a laptop.</SectionHeader>
         <div className="grid md:grid-cols-2 gap-10">
-          <div className="prose-body text-ink-700 dark:text-ink-200">
+          <div className="prose-body text-ink-700 dark:text-ink-200 drop-cap">
             <p>
               The simulation is open-source. From a clean checkout, the full pipeline — thermal
               validation, surrogate training, 41 000-run Monte Carlo, and figure generation —
@@ -272,8 +284,8 @@ export default function Page() {
           </div>
           <pre className="numera text-xs leading-relaxed text-ink-100 bg-ink-950 dark:bg-ink-900 border hairline rounded-lg p-6 overflow-x-auto">
 {`# 1. Clone and install
-git clone <repo-url>
-cd transformer_lol_sim
+git clone https://github.com/fakhrihakim20/trafo_lol_solar.git
+cd trafo_lol_solar
 python -m venv .venv && .venv\\Scripts\\activate
 pip install -e .
 
@@ -291,36 +303,35 @@ python scripts/04_run_monte_carlo.py --n_runs 1000
 python scripts/05_generate_figures.py`}
           </pre>
         </div>
-        <div className="mt-14 border-t hairline pt-10">
-          <p className="kicker">Cite</p>
-          <p className="prose-body mt-4 text-ink-700 dark:text-ink-200">
-            Hakim, F. (2026). Transformer Loss-of-Life Acceleration under High Rooftop-PV
-            Penetration on Indonesian 150/20 kV Substations: A Hybrid IEEE C57.91 + XGBoost
-            Simulation. <em>IEEE Int. Conf. on Technology and Policy in Electric Power and Energy
-            (ICT-PEP)</em>.
-          </p>
-        </div>
       </Section>
+
+      {/* Colophon — replaces the old footer */}
+      <Colophon />
     </>
   );
 }
 
 function Section({
   id,
+  numeral,
   kicker,
   children,
 }: {
   id: string;
+  numeral: string;
   kicker: string;
   children: React.ReactNode;
 }) {
   return (
     <section
       id={id}
-      className="px-6 py-24 md:py-32 scroll-mt-24 border-t hairline first-of-type:border-t-0"
+      className="px-6 py-24 md:py-36 scroll-mt-24 border-t hairline first-of-type:border-t-0"
     >
       <div className="max-w-page mx-auto">
-        <p className="kicker mb-3">{kicker}</p>
+        <p className="kicker mb-4">
+          <span className="text-ink-400 dark:text-ink-600 mr-2">{numeral}.</span>
+          {kicker}
+        </p>
         {children}
       </div>
     </section>
@@ -344,14 +355,70 @@ function SitePair({ k, v }: { k: string; v: string }) {
   );
 }
 
-function Implication({ title, body }: { title: string; body: string }) {
+function Implication({ n, title, body }: { n: number; title: string; body: string }) {
   return (
-    <article>
-      <h3 className="font-serif text-2xl md:text-3xl text-ink-950 dark:text-ink-50 tracking-tighter leading-snug">
-        {title}
-      </h3>
-      <p className="mt-4 prose-body text-ink-600 dark:text-ink-300">{body}</p>
-    </article>
+    <li className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[3rem_1fr] gap-x-6">
+      <span className="numera text-2xl md:text-3xl text-ink-300 dark:text-ink-700 leading-none pt-1.5">
+        {n}.
+      </span>
+      <div>
+        <h3 className="font-serif text-2xl md:text-3xl text-ink-950 dark:text-ink-50 tracking-tighter leading-snug">
+          {title}
+        </h3>
+        <p className="mt-4 prose-body text-ink-600 dark:text-ink-300">{body}</p>
+      </div>
+    </li>
+  );
+}
+
+function Colophon() {
+  return (
+    <footer className="border-t hairline px-6 py-16 md:py-20 mt-20 text-sm">
+      <div className="max-w-page mx-auto grid md:grid-cols-12 gap-10">
+        <div className="md:col-span-5">
+          <p className="font-serif italic text-lg text-ink-900 dark:text-ink-100">
+            Transformer Loss-of-Life under Rooftop-PV Penetration.
+          </p>
+          <p className="mt-3 text-ink-600 dark:text-ink-300 max-w-[40ch] leading-relaxed">
+            A stakeholder companion to the IEEE&nbsp;ICT-PEP&nbsp;2026 manuscript on transformer
+            aging at GI&nbsp;Jember.
+          </p>
+        </div>
+
+        <dl className="md:col-span-4 grid grid-cols-[6rem_1fr] gap-y-3 gap-x-4 text-ink-600 dark:text-ink-300">
+          <dt className="kicker self-center">Typeset in</dt>
+          <dd>Newsreader, Geist, JetBrains Mono</dd>
+          <dt className="kicker self-center">Charts</dt>
+          <dd>Plotly.js, hand-built SVG</dd>
+          <dt className="kicker self-center">Stack</dt>
+          <dd>Next.js 14, Tailwind CSS, KaTeX</dd>
+          <dt className="kicker self-center">Hosting</dt>
+          <dd>GitHub Pages, static export</dd>
+        </dl>
+
+        <div className="md:col-span-3 text-ink-600 dark:text-ink-300">
+          <p className="kicker mb-3">Cite</p>
+          <p className="font-serif italic leading-relaxed">
+            Hakim, F. (2026). Transformer Loss-of-Life Acceleration under High Rooftop-PV
+            Penetration on Indonesian 150/20 kV Substations. <em>IEEE ICT-PEP</em>.
+          </p>
+          <p className="mt-5 kicker">Source</p>
+          <p className="mt-2">
+            <a
+              className="underline underline-offset-4 hover:text-ink-900 dark:hover:text-ink-50"
+              href="https://github.com/fakhrihakim20/trafo_lol_solar"
+            >
+              github.com/fakhrihakim20/trafo_lol_solar
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <p className="max-w-page mx-auto mt-14 pt-6 border-t hairline text-xs text-ink-500 dark:text-ink-400 flex flex-wrap justify-between gap-4">
+        <span>Fakhri Hakim · PT PLN (Persero) · 2026</span>
+        <span className="numera">{`v1.0 · ${SUBSTATION.name} calibration`}</span>
+      </p>
+    </footer>
   );
 }
 

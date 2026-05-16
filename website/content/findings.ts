@@ -35,6 +35,8 @@ export type Finding = {
   title: string;
   oneLiner: string;
   body: string;
+  /** Optional editorial pull-quote shown between body and chart. */
+  pullQuote?: string;
   callouts: { value: string; label: string }[];
   chart: string; // component key
 };
@@ -51,6 +53,8 @@ export const FINDINGS: Finding[] = [
       'temperature θ_HS to within 0.230 °C RMSE (R² = 0.9998); 99.78 % of predictions fall inside the engineering-relevant ' +
       '±1.5 °C band. That makes the full 41-scenario × 1 000-run Monte Carlo tractable on a single laptop in 53 minutes — ' +
       'a 474× wall-clock speedup at 1 000 runs versus the ODE baseline.',
+    pullQuote:
+      'A learned surrogate that reproduces 41 000 ODE trajectories to a quarter of a degree turns a week of computation into an afternoon.',
     callouts: [
       { value: '0.230 °C', label: 'Hold-out RMSE' },
       { value: '0.9998', label: 'R²' },
@@ -72,6 +76,8 @@ export const FINDINGS: Finding[] = [
       'LoL falls to 0.0303 % at 30 % PV, 0.0285 % at 50 %, and 0.0277 % at 75 %. At the highest penetration, the substation ' +
       'exports for ≈ 643 hours per year — 7 % of the year in reverse-flow operation. The ±1σ Monte Carlo bands are tight ' +
       '(σ ≈ 0.0002 %), so even sub-percent scenario differences are statistically resolvable.',
+    pullQuote:
+      'Every percentage point of rooftop PV strips load from the transformer at its hottest hour — and the aging integral is super-linear in that hour.',
     callouts: [
       { value: '−19 %', label: 'LoL at 75 % PV vs baseline' },
       { value: '0.0342 %', label: 'Baseline annual LoL' },
@@ -92,6 +98,8 @@ export const FINDINGS: Finding[] = [
       'LoL is 0.0376 % — still 10 % above today’s no-PV baseline. The takeaway for fleet planners: rooftop PV is a real ' +
       'aging benefit today, but it is not by itself sufficient to absorb the climate × growth headwind across the 2030 horizon. ' +
       'Other levers — cooling-system upgrades, transformer up-rating, demand-side management — must run in parallel.',
+    pullQuote:
+      'Even at 75 % rooftop penetration, the 2030 stack still leaves the substation aging faster than today’s no-PV baseline.',
     callouts: [
       { value: '+7 %', label: 'From +1 °C alone' },
       { value: '+33 %', label: 'From +4.5 %/yr growth alone' },
@@ -113,6 +121,8 @@ export const FINDINGS: Finding[] = [
       'across all hours with positive marginal value; the threshold rule only discharges above 0.85 pu, which happens to ' +
       'target precisely the hours where the Arrhenius integral is super-linear. Until aging-aware constraints enter the LP, ' +
       'practitioners should not assume that economically-optimal dispatch protects transformer life.',
+    pullQuote:
+      'Cost-optimal dispatch and aging-optimal dispatch are not the same problem. The LP optimises the wrong objective.',
     callouts: [
       { value: '−1.5 %', label: 'Battery LoL benefit (threshold)' },
       { value: '+1.2 %', label: 'Economic LP penalty vs threshold' },
@@ -133,6 +143,8 @@ export const FINDINGS: Finding[] = [
       'is straightforward: the EV charging curve concentrates around the 18:00–21:00 window, which is also the existing ' +
       'residential evening peak and the daily hot-spot maximum. Without time-of-use signalling or directly controlled ' +
       'charging, EV adoption converts a rooftop-PV "aging gift" into a net deterioration.',
+    pullQuote:
+      'EV charging concentrates at the evening peak. Without coordination, it consumes the rooftop-PV aging benefit and then some.',
     callouts: [
       { value: '+42 %', label: 'EV uplift vs same PV scenario' },
       { value: '+18 %', label: 'Net vs no-PV baseline' },
