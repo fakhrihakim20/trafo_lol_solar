@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import PlotlyChart, { palette, useIsDark } from './PlotlyChart';
-import { useData, type Metrics } from './useData';
+import { useData, dataUrl, type Metrics } from './useData';
 import { HEADLINE } from '@/content/findings';
 
 type Pair = { truth: number; pred: number; err: number };
@@ -14,7 +14,7 @@ export default function SurrogateAccuracy() {
   const [holdout, setHoldout] = useState<Pair[] | 'unavailable'>('unavailable');
 
   useEffect(() => {
-    fetch('/data/surrogate_holdout.json')
+    fetch(dataUrl('surrogate_holdout.json'))
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((j: Pair[]) => setHoldout(j))
       .catch(() => setHoldout('unavailable'));

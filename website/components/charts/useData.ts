@@ -2,13 +2,20 @@
 
 import { useEffect, useState } from 'react';
 
-const BASE = process.env.NODE_ENV === 'production' ? '' : '';
+// When the site is built for a GitHub Pages subpath (NEXT_PUBLIC_BASE_PATH set
+// at build time), all fetch URLs need the same prefix or they 404 on Pages.
+// Empty string for local dev and root-served deployments.
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+export function dataUrl(file: string): string {
+  return `${BASE_PATH}/data/${file}`;
+}
 
 export function useData<T = unknown>(file: string): T | null {
   const [data, setData] = useState<T | null>(null);
   useEffect(() => {
     let alive = true;
-    fetch(`${BASE}/data/${file}`)
+    fetch(dataUrl(file))
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
         return r.json();
