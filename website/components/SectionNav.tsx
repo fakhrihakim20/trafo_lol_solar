@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 const SECTIONS = [
   { id: 'problem', numeral: 'I', label: 'Why' },
@@ -87,13 +88,16 @@ export default function SectionNav() {
           ))}
         </ol>
 
-        <a
-          href="/scenarios/"
-          className="hidden lg:inline-flex items-baseline gap-1 text-sm text-ink-600 dark:text-ink-300 hover:text-ink-950 dark:hover:text-ink-50 transition-colors"
-        >
-          Data explorer
-          <span aria-hidden className="numera text-xs">↗</span>
-        </a>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <a
+            href="/scenarios/"
+            className="hidden lg:inline-flex items-baseline gap-1 text-sm text-ink-600 dark:text-ink-300 hover:text-ink-950 dark:hover:text-ink-50 transition-colors"
+          >
+            Data explorer
+            <span aria-hidden className="numera text-xs">↗</span>
+          </a>
+        </div>
       </div>
     </nav>
   );

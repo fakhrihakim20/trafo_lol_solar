@@ -20,9 +20,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  body { background: #111111; color: #F7F6F3; }
-}
+html.dark body { background: #111111; color: #F7F6F3; }
 
 /* Subtle warm grain on a fixed pointer-events-none layer (taste-skill rule §5) */
 body::before {
@@ -36,9 +34,7 @@ body::before {
   mix-blend-mode: multiply;
 }
 
-@media (prefers-color-scheme: dark) {
-  body::before { mix-blend-mode: screen; opacity: 0.04; }
-}
+html.dark body::before { mix-blend-mode: screen; opacity: 0.04; }
 
 /* Editorial typographic refinements */
 .prose-body {
@@ -62,10 +58,8 @@ body::before {
   font-weight: 400;
   color: #111111;
 }
-@media (prefers-color-scheme: dark) {
-  .drop-cap > p:first-of-type::first-letter,
-  .drop-cap p.lede::first-letter { color: #F7F6F3; }
-}
+html.dark .drop-cap > p:first-of-type::first-letter,
+html.dark .drop-cap p.lede::first-letter { color: #F7F6F3; }
 
 /* Byline — masthead row at the top of the piece */
 .byline {
@@ -78,11 +72,9 @@ body::before {
   border-bottom: 1px solid #EAEAEA;
   padding: 0.75rem 0;
 }
-@media (prefers-color-scheme: dark) {
-  .byline {
-    color: #B3B1AC;
-    border-color: rgba(255,255,255,0.08);
-  }
+html.dark .byline {
+  color: #B3B1AC;
+  border-color: rgba(255,255,255,0.08);
 }
 
 /* Colophon stat row — four tabular figures + labels, hairline rules,
@@ -98,9 +90,7 @@ body::before {
 @media (min-width: 768px) {
   .colophon-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3rem; }
 }
-@media (prefers-color-scheme: dark) {
-  .colophon-row { border-color: rgba(255,255,255,0.08); }
-}
+html.dark .colophon-row { border-color: rgba(255,255,255,0.08); }
 
 /* Pull quote — italic serif, left hairline rule, generous vertical room. */
 .pull-quote {
@@ -116,11 +106,9 @@ body::before {
   margin: 3.5rem 0;
   max-width: 38ch;
 }
-@media (prefers-color-scheme: dark) {
-  .pull-quote {
-    color: #F7F6F3;
-    border-color: rgba(255,255,255,0.16);
-  }
+html.dark .pull-quote {
+  color: #F7F6F3;
+  border-color: rgba(255,255,255,0.16);
 }
 
 /* Reading progress — thin fixed top bar driven by JS rAF.
@@ -142,9 +130,7 @@ body::before {
   width: var(--progress, 0%);
   transition: width 60ms linear;
 }
-@media (prefers-color-scheme: dark) {
-  .reading-progress > span { background: #9AAFD4; }
-}
+html.dark .reading-progress > span { background: #9AAFD4; }
 @media (prefers-reduced-motion: reduce) {
   .reading-progress > span { transition: none; }
 }
@@ -161,9 +147,7 @@ body::before {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
-@media (prefers-color-scheme: dark) {
-  .prose-body a { color: #9AAFD4; }
-}
+html.dark .prose-body a { color: #9AAFD4; }
 
 .display {
   font-family: var(--font-newsreader), serif;
@@ -186,21 +170,15 @@ body::before {
   /* Bumped from #787774 -> #56544F for WCAG AA on warm bone background */
   color: #56544F;
 }
-@media (prefers-color-scheme: dark) {
-  .kicker { color: #B3B1AC; }
-}
+html.dark .kicker { color: #B3B1AC; }
 
 .hairline { border-color: #EAEAEA; }
-@media (prefers-color-scheme: dark) {
-  .hairline { border-color: rgba(255,255,255,0.08); }
-}
+html.dark .hairline { border-color: rgba(255,255,255,0.08); }
 
 /* Plotly: hide modebar background plate so it sits flush */
 .js-plotly-plot .modebar { background: transparent !important; }
 .js-plotly-plot .modebar-btn path { fill: #56544F !important; }
-@media (prefers-color-scheme: dark) {
-  .js-plotly-plot .modebar-btn path { fill: #9B9A95 !important; }
-}
+html.dark .js-plotly-plot .modebar-btn path { fill: #9B9A95 !important; }
 
 /* Focus rings — visible, never invisible (impeccable harden rule) */
 *:focus-visible {

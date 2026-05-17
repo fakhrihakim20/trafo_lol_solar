@@ -26,9 +26,21 @@ export const metadata: Metadata = {
   authors: [{ name: 'Fakhri Hakim, PT PLN (Persero)' }],
 };
 
+// Runs synchronously before first paint to set .dark on <html> based on the
+// reader's saved preference (or OS default). Without this, the page would
+// briefly flash in the wrong theme on every load.
+const themePreloadScript = `(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${news.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${geist.variable} ${news.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themePreloadScript }} />
+      </head>
       <body className="font-sans antialiased">
         <a
           href="#main"

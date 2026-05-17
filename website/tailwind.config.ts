@@ -6,7 +6,7 @@ const config: Config = {
     './components/**/*.{ts,tsx}',
     './content/**/*.{ts,tsx}',
   ],
-  darkMode: 'media',
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

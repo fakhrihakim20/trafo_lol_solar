@@ -34,11 +34,16 @@ const PALETTE = {
 export function useIsDark() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
-    const m = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => setDark(m.matches);
-    handler();
-    m.addEventListener('change', handler);
-    return () => m.removeEventListener('change', handler);
+    // Track the .dark class on <html> (set by ThemeToggle + the FOUC preload
+    // script in layout.tsx). MutationObserver fires whenever the toggle flips
+    // the class, so Plotly axis/grid colours follow the user's chosen theme
+    // without any explicit wiring from the toggle component.
+    const root = document.documentElement;
+    const update = () => setDark(root.classList.contains('dark'));
+    update();
+    const obs = new MutationObserver(update);
+    obs.observe(root, { attributes: true, attributeFilter: ['class'] });
+    return () => obs.disconnect();
   }, []);
   return dark;
 }
