@@ -107,13 +107,22 @@ export default function PvVsLolChart() {
         ariaLabel="Line chart of annual transformer loss-of-life versus rooftop-PV penetration, faceted by ambient warming and load growth"
         data={traces}
         layout={{
+          // Extra left margin: the italic serif y-axis title is long; the shared
+          // chartBase l:64 clips it into the tick labels at this chart's scale.
+          margin: { l: 100, r: 24, t: 24, b: 56 },
           xaxis: {
-            title: { text: 'Rooftop-PV penetration (%)', standoff: 12 },
-            ticksuffix: '%',
+            title: { text: 'Rooftop-PV penetration', standoff: 14 },
+            // Tick marks at the actual 5 data positions only — not the auto
+            // every-10 grid that leaves empty ticks at 20 %, 40 %, 60 %.
+            tickmode: 'array',
+            tickvals: [0, 10, 30, 50, 75],
+            ticktext: ['0 %', '10 %', '30 %', '50 %', '75 %'],
             range: [-3, 78],
           },
           yaxis: {
-            title: { text: 'Annual loss-of-life (% of 180 000 h life)', standoff: 12 },
+            // Shorter title + more standoff so the rotated serif text doesn't
+            // overlap the tick values.
+            title: { text: 'Annual loss-of-life (%)', standoff: 28 },
             tickformat: '.4f',
             ticksuffix: '%',
           },
